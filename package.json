@@ -1,0 +1,26 @@
+{
+  "name": "04-festival-de-musica",
+  "version": "1.0.0",
+  "description": "Aprendiendo SASS, PNPM y Gulp",
+  "type": "module",
+  "scripts": {
+    "sass": "sass --watch src/scss:build/css",
+    "dev": "gulp dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Desarrollo Web completo",
+    "Festival de Música",
+    "SASS",
+    "PNPM",
+    "Gulp"
+  ],
+  "author": "Antonio Francisco Cutillas Gárcia",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/gulp": "^4.0.18",
+    "gulp": "^5.0.1",
+    "gulp-sass": "^6.0.1",
+    "sass": "^1.97.3"
+  }
+}
