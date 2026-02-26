@@ -1,0 +1,42 @@
+/*  -----  /src/scss/layout/_festival.scss  -----  */
+
+
+@use '../base/variables' as var;
+@use '../base/mixins' as mix;
+
+
+.sobre-festival {
+    
+    // -----  mixin  -  contenedor  -----
+    @include mix.contenedor;
+
+    // -----  mixin  -  tablet  -  @media(min-width: 768px)  -----
+    @include mix.tablet {
+        
+        // -----  mixin  -  grid($columnas: 1, $gap: 5rem)  -----
+        @include mix.grid(2); 
+               
+    }
+}
+
+
+.contenido-festival {
+
+    margin-top: 5rem;
+
+    @include mix.tablet {
+        margin-top: 1rem;
+    }
+
+    h2 {
+        margin-bottom: 2rem;
+    }
+
+    .fecha {
+        color: var.$verde;
+        font-weight: 700;
+    }
+
+
+
+}

@@ -4,7 +4,7 @@
 @use './variables' as var;
 
 
-//  -----  mixin  -  telefono  -  @media(min-width: 768px)  -----  
+//  -----  mixin - telefono - @media(min-width: 768px)  -----  
 @mixin telefono {
     @media(min-width: var.$telefono) {
         @content;
@@ -12,7 +12,7 @@
 }
 
 
-//  -----  mixin  -  tablet  -  @media(min-width: 768px)  -----
+//  -----  mixin - tablet - @media(min-width: 768px)  -----
 @mixin tablet {
     @media(min-width: var.$tablet) {
         @content;
@@ -20,7 +20,7 @@
 }
 
 
-//  -----  mixin  -  desktop  -  @media(min-width: 1200px)  -----
+//  -----  mixin - desktop - @media(min-width: 1200px)  -----
 @mixin desktop {
     @media(min-width: var.$desktop) {
         @content;
@@ -28,9 +28,25 @@
 }
 
 
-//  -----  mixin  -  desktopXL  -  @media(min-width: 1400px)  -----
+//  -----  mixin - desktopXL - @media(min-width: 1400px)  -----
 @mixin desktopXL {
     @media(min-width: var.$desktopXL) {
         @content;
     }
+}
+
+
+//  -----  mixin - contenedor  -----
+@mixin contenedor {
+    width: 95%;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+
+//  -----  mixin - grid($columnas: 1, $gap: 5rem)  -----
+@mixin grid($columnas: 1, $gap: 5rem) {
+    display: grid;
+    grid-template-columns: repeat($columnas, 1fr);
+    gap: $gap;
 }
