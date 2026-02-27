@@ -1,0 +1,18 @@
+/*  -----  /src/scss/layout/_footer.scss  -----  */
+
+
+@use '../base/variables' as var;
+
+
+.footer {
+
+    background-color:  var.$rosa;
+    padding: 2rem 0;
+    
+    p {
+        margin: 0;
+        color: var.$blanco;
+        text-align: center;
+        font-weight: 700;
+    }
+}

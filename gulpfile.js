@@ -33,14 +33,14 @@ const sass = gulpSass(dartSass);
 
 export const css = ()  => {
 
-    return src('src/scss/app.scss')
+    return src('src/scss/app.scss', { sourcemaps: true })
         
         .pipe(
             sass()
                 .on('error', sass.logError)
         )
         
-        .pipe(dest('build/css'));
+        .pipe(dest('build/css', { sourcemaps: true }));
    
  
 } 
