@@ -1,4 +1,8 @@
-/*  -----  /src/scss/base/_global.scss  -----  */
+/*  
+    * -----------------------------------------------------------
+    * -----  _global.scss  --  /src/scss/base/_global.scss  -----
+    * -----------------------------------------------------------
+*/
 
 
 @use './variables' as var;
@@ -22,6 +26,10 @@ body {
     font-style: normal;
     color: var.$negro;
     font-size: 2rem;
+
+    &.overflow-hidden {
+        overflow: hidden;
+    }
 }
 
 p {

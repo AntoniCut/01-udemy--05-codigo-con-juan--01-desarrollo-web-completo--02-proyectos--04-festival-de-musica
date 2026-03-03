@@ -10,10 +10,14 @@
 */
 
 
-import { src, dest, watch } from 'gulp';
+import gulp from 'gulp';
 import * as dartSass from 'sass'
 import gulpSass from 'gulp-sass';
 
+
+
+//  -----  desestructuración de métodos de Gulp  -----
+const { src, dest, watch, series, parallel } = gulp;
 
 
 /**  -----  `Configuración de Sass para Gulp`  ----- */
@@ -28,10 +32,9 @@ const sass = gulpSass(dartSass);
  * @description
  * - Esta función es una tarea de Gulp que compila el archivo `app.scss` ubicado en `src/scss/` y lo guarda en `build/css/`.
  * - Utiliza el plugin `gulp-sass` para realizar la compilación de Sass a CSS.
- * @returns {NodeJS.ReadWriteStream}
  */
 
-export const css = ()  => {
+export const css = () => {
 
     return src('src/scss/app.scss', { sourcemaps: true })
         
@@ -53,12 +56,34 @@ export const css = ()  => {
  * @description
  * - Esta función es una tarea de Gulp que se encarga de ejecutar la tarea `css` para compilar los archivos Sass a CSS.
  * - Se puede configurar para observar cambios en los archivos Sass y recompilar automáticamente cuando se detecten cambios.
- * @returns {ReturnType<typeof watch>} - Retorna un objeto de tipo Watch de Gulp.
  */
 
-export const dev = () => {
+export const dev = () => 
+    
+    watch(
+        [
+            'src/scss/**/*.scss', 
+            'src/js/**/*.js'
+        ], 
+        series(css, js)
+    );
 
-    return watch('src/scss/**/*.scss', css);
 
+/**
+ * ---------------------
+ * -----  `js()`  -----
+ * ---------------------
+ * @description 
+ * - Esta función es una tarea de Gulp que se encarga de copiar el archivo `app.js` 
+ *   desde la carpeta `src/js/` a la carpeta `build/js/`.
+ */
+export const js = () => {
+
+    return src('src/js/app.js')
+        .pipe(dest('build/js'));
 
 }
+
+
+//export default series(css, js, dev);
+export default parallel(css, js, dev);

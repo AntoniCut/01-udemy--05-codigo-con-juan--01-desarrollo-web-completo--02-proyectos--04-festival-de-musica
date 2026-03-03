@@ -1,9 +1,14 @@
-/*  -----  /src/scss/layout/_index.scss  -----  */
+/*  
+	* -----------------------------------------------------------
+	* -----  _index.scss  --  /src/scss/layout/_index.scss  -----
+	* -----------------------------------------------------------  
+*/
 
 
 @forward './header';
 @forward './video';
 @forward './festival';
 @forward './lineup';
+@forward './galeria';
 @forward './boletos';
 @forward './footer';
