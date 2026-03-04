@@ -18,6 +18,46 @@ if (!$body)
 
 
 /**
+ * --------------------------------
+ * -----  `navegacionFija()`  -----
+ * --------------------------------
+ * @description
+ * - Esta función se encarga de hacer que el encabezado del sitio web se fije en la parte superior de la pantalla cuando el usuario hace scroll hacia abajo.
+ * - Utiliza el método `getBoundingClientRect()` para determinar la posición del elemento `.sobre-festival` y agregar o quitar la clase `fixed` al encabezado según corresponda.
+ */
+
+const navegacionFija = () => {
+
+
+    /** @type {HTMLHeaderElement | null} - `elemento <header> del documento` */
+    const $header = document.querySelector('.header')
+    
+    
+    /** @type {HTMLSectionElement | null} - `elemento .sobre-festival del documento` */
+    const $sobreFestival = document.querySelector('.sobre-festival')
+
+
+    if (!$header || !$sobreFestival)
+        throw new Error('No se encontró el elemento <header> con la clase .header o el elemento .sobre-festival en el DOM.');
+
+
+    //  -----  Agregamos un evento de scroll al documento para fijar  ----- 
+    //  -----  el encabezado cuando se haga scroll hacia abajo        -----
+    document.addEventListener('scroll', function() {
+        
+        if($sobreFestival.getBoundingClientRect().bottom < 1) 
+            $header.classList.add('fixed')
+        
+        else 
+            $header.classList.remove('fixed')
+        
+    })
+
+}
+
+
+
+/**
  * -------------------------------------------
  * -----  `cerrarModal()`  -----
  * -------------------------------------------
@@ -180,6 +220,121 @@ const crearGaleria = () => {
 }
 
 
-//  -----  Ejecutamos la función crearGaleria cuando el DOM esté completamente cargado  -----
-document.addEventListener('DOMContentLoaded', () => crearGaleria());
 
+/**
+ * --------------------------------------
+ * -----  `resaltarEnlace()`  -----
+ * --------------------------------------
+ * @description
+ * - Esta función se encarga de resaltar el enlace de navegación correspondiente a la sección visible en la pantalla.
+ * - Agrega un evento de scroll al documento para detectar qué sección está actualmente visible y resaltar el enlace correspondiente en la navegación.
+ */
+const resaltarEnlace = () => {
+    
+    
+    //  -----  Agregamos un evento de scroll al documento para resaltar      -----
+    //  -----  el enlace de navegación correspondiente a la sección visible  -----
+    document.addEventListener('scroll', function() {
+        
+        /** @type {NodeListOf<HTMLElement>} - `todas las secciones del documento` */
+        const $sections = document.querySelectorAll('section');
+        
+        /** @type {NodeListOf<HTMLAnchorElement>} - `todos los enlaces de navegación` */
+        const $navLinks = document.querySelectorAll('.navegacion-principal a');
+
+        /** @type {string} - `id de la sección actualmente visible` */
+        let actual = '';
+        
+
+        //  -----  Iteramos sobre cada sección para determinar   -----
+        //  -----  cuál está actualmente visible en la pantalla  -----
+        $sections.forEach( section => {
+            
+
+            /** @type {number} - `posición superior de la sección con su elemento padre` */
+            const sectionTop = section.offsetTop;
+            
+
+            /** @type {number} - `altura de la sección` */
+            const sectionHeight = section.clientHeight;
+
+            //  -----  Si la posición de scroll es mayor o igual a la posición superior de la sección menos un tercio de su altura,   -----
+            if(window.scrollY >= (sectionTop - sectionHeight / 3 ) ) 
+                actual = section.id;
+            
+        })
+
+
+        //  -----  Iteramos sobre cada enlace de navegación para     -----
+        //  -----  resaltar el que corresponde a la sección visible  -----
+        $navLinks.forEach(link => {
+            
+            //  -----  Eliminamos la clase 'active' de todos los enlaces  -----
+            link.classList.remove('active');
+            
+            //  -----  Si el enlace tiene un href que coincide con el id   -----
+            //  -----  de la sección visible, agregamos la clase 'active'  -----
+            if(link.getAttribute('href') === '#' + actual) 
+                link.classList.add('active');
+            
+        })
+    })
+}
+
+
+
+/**
+ * --------------------------------------
+ * -----  `scrollNav()`  -----
+ * --------------------------------------
+ * @description
+ * - Esta función se encarga de agregar un comportamiento de desplazamiento suave a los enlaces de navegación.
+ * - Agrega un evento de clic a cada enlace de navegación para evitar el comportamiento predeterminado y desplazar suavemente a la sección correspondiente.
+ */
+
+const scrollNav = () => {
+    
+
+    /** @type {NodeListOf<HTMLAnchorElement> | null} - `todos los enlaces de navegación` */
+    const $navLinks = document.querySelectorAll('.navegacion-principal a')
+
+
+    //  -----  Validamos que existan enlaces de navegación en el DOM  -----
+    if (!$navLinks || $navLinks.length === 0)
+        throw new Error('No se encontraron enlaces de navegación con la clase .navegacion-principal a en el DOM.');
+    
+
+    //  -----  Agregamos un evento de clic a cada enlace de navegación para     -----
+    //  -----  desplazar suavemente a la sección correspondiente al enlace clicado  -----
+    $navLinks?.forEach( link => {
+        
+
+        link.addEventListener('click', e => {
+            
+            e.preventDefault()
+          
+            /** @type {string | null} - `href del enlace clicado` */           
+            const $sectionScroll = link.getAttribute('href');
+            
+            if (!$sectionScroll) 
+                return;
+            
+            /** @type {HTMLSectionElement | null} - `sección correspondiente al enlace clicado` */
+            const $section = document.querySelector($sectionScroll);
+
+            //  -----  Desplazamos suavemente a la sección correspondiente al enlace clicado  -----
+            $section?.scrollIntoView({behavior: "smooth"});
+
+        })
+    })
+}
+
+
+
+//  -----  Ejecutamos la función crearGaleria cuando el DOM esté completamente cargado  -----
+document.addEventListener('DOMContentLoaded', () => {
+    navegacionFija();
+    crearGaleria();
+    resaltarEnlace();
+    scrollNav();
+});

@@ -10,6 +10,7 @@
 */
 
 
+
 import gulp from 'gulp';
 import * as dartSass from 'sass'
 import gulpSass from 'gulp-sass';
@@ -34,19 +35,14 @@ const sass = gulpSass(dartSass);
  * - Utiliza el plugin `gulp-sass` para realizar la compilación de Sass a CSS.
  */
 
-export const css = () => {
-
-    return src('src/scss/app.scss', { sourcemaps: true })
-        
+export const css = () => 
+    src('src/scss/app.scss', { sourcemaps: true })
         .pipe(
             sass()
                 .on('error', sass.logError)
         )
-        
         .pipe(dest('build/css', { sourcemaps: true }));
-   
  
-} 
 
 
 /**
@@ -59,7 +55,6 @@ export const css = () => {
  */
 
 export const dev = () => 
-    
     watch(
         [
             'src/scss/**/*.scss', 
@@ -67,6 +62,7 @@ export const dev = () =>
         ], 
         series(css, js)
     );
+
 
 
 /**
@@ -77,12 +73,11 @@ export const dev = () =>
  * - Esta función es una tarea de Gulp que se encarga de copiar el archivo `app.js` 
  *   desde la carpeta `src/js/` a la carpeta `build/js/`.
  */
-export const js = () => {
 
-    return src('src/js/app.js')
+export const js = () => 
+    src('src/js/app.js')
         .pipe(dest('build/js'));
 
-}
 
 
 //export default series(css, js, dev);

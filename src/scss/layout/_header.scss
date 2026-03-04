@@ -13,6 +13,18 @@
 
     background-color: var.$verde;
 
+    @include mix.tablet {
+
+        &.fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            box-shadow: .1rem .2rem .3rem #333;
+        }
+    }
+
     .contenido-header {
 
         padding: 2rem;
@@ -27,10 +39,10 @@
 
 
     h1 {
-        
+
         color: var.$blanco;
         text-align: center;
-        
+
         //  -----  @media(min-width: 768px)  -----
         @include mix.tablet {
             margin: 0;
@@ -56,7 +68,8 @@
         color: var.$blanco;
         font-size: 2.4rem;
 
-        &:hover {
+        &:hover,
+        &.active {
             color: var.$amarillo;
         }
     }
