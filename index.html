@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="./src/favicon/festival-de-musica-favicon.jpg" type="image/x-icon">
+    <link rel="icon" href="./build/favicon/festival-de-musica-favicon.png" type="image/png">
     <title> Festival de Música </title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +63,7 @@
         </div>
 
         <!--  -----  Video  -----  -->
-        <video autoplay muted loop>
+        <video autoplay muted loop preload="auto">
 
             <source src="./video/dj.mp4" type="video/mp4">
             <source src="./video/dj.ogv" type="video/ogg">
@@ -80,7 +80,36 @@
 
         <!--  -----  Imagen del Festival  -----  -->
         <div class="imagen">
-            <img src="./src/img/imagen_dj.jpg" alt="Sobre el Festival de Música">
+
+            <!--  -----  Fallback Image  -----  -->
+            <picture>
+
+                <source 
+                    loading="lazy" 
+                    width="300"
+                    height="200"
+                    srcset="./build/img/imagen_dj.avif" type="image/avif"
+                    alt="Sobre el Festival de Música"
+                >
+                
+                <source 
+                    loading="lazy" 
+                    width="300"
+                    height="200"
+                    srcset="./build/img/imagen_dj.webp" type="image/webp"
+                    alt="Sobre el Festival de Música"
+                >
+
+                <img
+                    loading="lazy" 
+                    width="300"
+                    height="200"
+                    src="./build/img/imagen_dj.jpg" 
+                    alt="Sobre el Festival de Música"
+                >
+
+            </picture>
+            
         </div>
 
         <!--  -----  Contenido del Festival  -----  -->

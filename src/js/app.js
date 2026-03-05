@@ -6,7 +6,7 @@
 
 
 /** - `path` base para las imágenes de la galería */
-const path = '/05-codigo-con-juan/01-desarrollo-web-completo/02-proyectos/04-festival-de-musica';
+//const path = '/05-codigo-con-juan/01-desarrollo-web-completo/02-proyectos/04-festival-de-musica';
 
 
 /** @type {HTMLBodyElement | null} - `elemento <body> del documento` */
@@ -92,7 +92,7 @@ const cerrarModal = () => {
 
 /**
  * -------------------------------------------
- * -----  `crearModalImagen(numImagen)`  -----
+ * -----  `crearImagenModal(numImagen)`  -----
  * -------------------------------------------
  * @description
  * - Crea un modal para mostrar la imagen seleccionada de la galería.
@@ -100,34 +100,68 @@ const cerrarModal = () => {
  * @param {number} numImagen 
  */
 
-const crearModalImagen = (numImagen) => {
+const crearImagenModal = (numImagen) => {
 
+
+    //  -----  Modal y <Body> -----
 
     /** @type {HTMLDivElement} - `modal que mostrará la imagen` */
     const $modal = document.createElement('div');
     
+    //  -----  Agregar clase CSS para estilos del modal  -----
     $modal.classList.add('modal');
 
+    //  -----  Agregar clase CSS para evitar el scroll del fondo cuando el modal esté abierto  -----
     $body?.classList.add('overflow-hidden');
 
     //  -----  Agregar el modal al cuerpo del documento para mostrarlo  -----
     $body.appendChild($modal);
 
 
-    /** @type {HTMLImageElement} - `imagen que se mostrará en el modal` */
-    const $imagenModal = document.createElement('img');
+    //  -----  Crear el contenido del modal con diferentes formatos de imagen para optimización  -----
 
-    $imagenModal.src = `${path}/src/img/gallery/full/${numImagen}.jpg`;
-    $imagenModal.alt = `Imagen ${numImagen}`;
 
-    //  -----  Agregar la imagen al modal para mostrarla  -----
-    $modal.appendChild($imagenModal);
+    /** @type {HTMLPictureElement} - elemento picture que contendrá las diferentes versiones de la imagen */
+    const $picture = document.createElement('picture');
 
-    // Evita que el click en la imagen cierre y vuelva a abrir
-    $imagenModal.addEventListener('click', (e) => {
+
+    /** @type {HTMLSourceElement} - fuente AVIF para el elemento picture */
+    const $sourceAvif = document.createElement('source');
+    
+    //  -----  Configuramos la fuente AVIF para el elemento picture  -----
+    $sourceAvif.srcset = `build/img/gallery/full/${numImagen}.avif`;
+    $sourceAvif.type = 'image/avif';
+
+
+    /** @type {HTMLSourceElement} - fuente WebP para el elemento picture */
+    const $sourceWebp = document.createElement('source');
+    
+    //  -----  Configuramos la fuente WebP para el elemento picture  -----
+    $sourceWebp.srcset = `build/img/gallery/full/${numImagen}.webp`;
+    $sourceWebp.type = 'image/webp';
+
+
+    /** @type {HTMLImageElement} - imagen que se mostrará en el modal */
+    const $imgModal = document.createElement('img');
+    
+    //  -----  Configuramos el elemento img con la imagen en formato JPG como fallback  -----
+    $imgModal.src = `build/img/gallery/full/${numImagen}.jpg`;
+    $imgModal.alt = `Imagen ${numImagen}`;
+
+
+    //  -----  Agregar un evento de clic al modal para cerrarlo cuando se haga clic fuera de la imagen  -----
+    $picture.append($sourceAvif, $sourceWebp, $imgModal);
+
+    // ----- Agregar la imagen al modal -----
+    $modal.appendChild($picture);
+
+    //  -----  Evita que el click en la imagen cierre el modal  -----
+    $imgModal.addEventListener('click', (e) => {
         e.stopPropagation();
     });
 
+
+    //  -----  Crear y agregar el botón de cerrar al modal  -----
 
     /** @type {HTMLButtonElement} - `botón para cerrar el modal` */
     const $btnCerrarModal = document.createElement('button');
@@ -141,7 +175,8 @@ const crearModalImagen = (numImagen) => {
     //  -----  click en el modal para cerrarlo  -----
     $modal.addEventListener('click', cerrarModal);
 
-}
+
+};
 
 
 
@@ -150,23 +185,46 @@ const crearModalImagen = (numImagen) => {
  * -----  `crearImagen(numImagen)`  -----
  * --------------------------------------
  * @description
- * - Crea una imagen y la agrega a la galería de imágenes.
- * - Recibe como parámetro el número de la imagen que se desea crear.
- * - Cada imagen se obtiene de la ruta `${path}/src/img/gallery/full/${numImagen}.jpg` donde `numImagen` es el número de la imagen.
- * @param {number} numImagen - Número de la imagen a crear, utilizado para construir la ruta de la imagen.
+ * - Crea un elemento <picture> con diferentes formatos de imagen
+ *   optimizados para la galería (AVIF, WebP y JPG).
+ *
+ * @param {number} numImagen - Número de la imagen en la galería.
+ * @returns {HTMLPictureElement} - Elemento picture listo para insertarse en el DOM.
  */
 
 const crearImagen = (numImagen) => {
 
+    /** @type {HTMLPictureElement} - `elemento picture que contendrá las diferentes versiones de la imagen` */
+    const $picture = document.createElement('picture');
 
-    /** @type {HTMLImageElement} - `imagen de la galería` */
-    const $imagen = document.createElement('img');
 
-    $imagen.src = `${path}/src/img/gallery/full/${numImagen}.jpg`;
-    $imagen.alt = `Imagen ${numImagen}`;
+    /** @type {HTMLSourceElement} - `fuente AVIF para el elemento picture` */
+    const $sourceAvif = document.createElement('source');
+        
+    $sourceAvif.srcset = `build/img/gallery/thumb/${numImagen}.avif`;
+    $sourceAvif.type = 'image/avif';
 
-    return $imagen;
-}
+
+    /** @type {HTMLSourceElement} - `fuente WebP para el elemento picture` */
+    const $sourceWebp = document.createElement('source');
+    
+    $sourceWebp.srcset = `build/img/gallery/thumb/${numImagen}.webp`;
+    $sourceWebp.type = 'image/webp';
+
+    /** @type {HTMLImageElement} - `imagen que se mostrará en el elemento picture` */
+    const $img = document.createElement('img');
+
+    //  -----  Configuramos el elemento img con la imagen en formato JPG como fallback  -----
+    $img.loading = 'lazy';
+    $img.width = 200;
+    $img.height = 150;
+    $img.src = `build/img/gallery/thumb/${numImagen}.jpg`;
+    $img.alt = `Imagen ${numImagen}`;
+
+    $picture.append($sourceAvif, $sourceWebp, $img);
+
+    return $picture;
+};
 
 
 /**
@@ -202,14 +260,14 @@ const crearGaleria = () => {
     //  -----  Creamos la cantidad de imágenes especificada y las agregamos a la galería  -----
     for (let i = 1; i <= cantidadImagenes; i++) {
 
-        /** @type {HTMLImageElement} - `imagen de la galería` */
+        /** @type {HTMLPictureElement} - `imagen de la galería` */
         const $imagen = crearImagen(i);
 
         //  -----  Añadimos la imagen al fragmento en memoria  -----
         $fragment.appendChild($imagen);
 
         //  -----  añadir evento de clic a la imagen para mostrarla en un modal  -----
-        $imagen.addEventListener('click', () => crearModalImagen(i));
+        $imagen.addEventListener('click', () => crearImagenModal(i));
 
     }
 
