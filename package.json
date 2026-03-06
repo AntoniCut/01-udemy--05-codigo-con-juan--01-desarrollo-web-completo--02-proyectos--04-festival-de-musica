@@ -4,7 +4,7 @@
   "description": "Aprendiendo SASS, PNPM y Gulp",
   "type": "module",
   "scripts": {
-    "sass": "sass --watch src/scss:build/css",
+    "sass": "sass --watch src/scss:dist/css",
     "dev": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

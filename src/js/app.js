@@ -5,9 +5,6 @@
 */
 
 
-/** - `path` base para las imágenes de la galería */
-//const path = '/05-codigo-con-juan/01-desarrollo-web-completo/02-proyectos/04-festival-de-musica';
-
 
 /** @type {HTMLBodyElement | null} - `elemento <body> del documento` */
 const $body = document.querySelector('body');
@@ -129,7 +126,7 @@ const crearImagenModal = (numImagen) => {
     const $sourceAvif = document.createElement('source');
     
     //  -----  Configuramos la fuente AVIF para el elemento picture  -----
-    $sourceAvif.srcset = `build/img/gallery/full/${numImagen}.avif`;
+    $sourceAvif.srcset = `./build/img/gallery/full/${numImagen}.avif`;
     $sourceAvif.type = 'image/avif';
 
 
@@ -137,7 +134,7 @@ const crearImagenModal = (numImagen) => {
     const $sourceWebp = document.createElement('source');
     
     //  -----  Configuramos la fuente WebP para el elemento picture  -----
-    $sourceWebp.srcset = `build/img/gallery/full/${numImagen}.webp`;
+    $sourceWebp.srcset = `./build/img/gallery/full/${numImagen}.webp`;
     $sourceWebp.type = 'image/webp';
 
 
@@ -145,7 +142,7 @@ const crearImagenModal = (numImagen) => {
     const $imgModal = document.createElement('img');
     
     //  -----  Configuramos el elemento img con la imagen en formato JPG como fallback  -----
-    $imgModal.src = `build/img/gallery/full/${numImagen}.jpg`;
+    $imgModal.src = `./build/img/gallery/full/${numImagen}.jpg`;
     $imgModal.alt = `Imagen ${numImagen}`;
 
 
@@ -201,14 +198,14 @@ const crearImagen = (numImagen) => {
     /** @type {HTMLSourceElement} - `fuente AVIF para el elemento picture` */
     const $sourceAvif = document.createElement('source');
         
-    $sourceAvif.srcset = `build/img/gallery/thumb/${numImagen}.avif`;
+    $sourceAvif.srcset = `./build/img/gallery/thumb/${numImagen}.avif`;
     $sourceAvif.type = 'image/avif';
 
 
     /** @type {HTMLSourceElement} - `fuente WebP para el elemento picture` */
     const $sourceWebp = document.createElement('source');
     
-    $sourceWebp.srcset = `build/img/gallery/thumb/${numImagen}.webp`;
+    $sourceWebp.srcset = `./build/img/gallery/thumb/${numImagen}.webp`;
     $sourceWebp.type = 'image/webp';
 
     /** @type {HTMLImageElement} - `imagen que se mostrará en el elemento picture` */
@@ -218,7 +215,7 @@ const crearImagen = (numImagen) => {
     $img.loading = 'lazy';
     $img.width = 200;
     $img.height = 150;
-    $img.src = `build/img/gallery/thumb/${numImagen}.jpg`;
+    $img.src = `./build/img/gallery/thumb/${numImagen}.jpg`;
     $img.alt = `Imagen ${numImagen}`;
 
     $picture.append($sourceAvif, $sourceWebp, $img);

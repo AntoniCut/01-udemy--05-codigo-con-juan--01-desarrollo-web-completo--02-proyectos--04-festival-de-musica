@@ -40,9 +40,9 @@ const sass = gulpSass(dartSass);
  * - Utiliza el método `src` para seleccionar los archivos y el método `dest` para especificar el destino de los archivos copiados. 
  */
 
-export const favicon = () => 
-    src('src/favicon/**/*')
-        .pipe(dest('build/favicon'));
+// export const favicon = () => 
+//     src('src/favicon/**/*')
+//         .pipe(dest('build/favicon'));
 
 
         
@@ -96,12 +96,12 @@ export const js = () =>
 export const dev = () =>
     watch(
         [
-            'src/favicon/**/*',
+            //'src/favicon/**/*',
             'src/scss/**/*.scss',
             'src/js/**/*.js',
             'src/img/**/*.{jpg,png}'
         ],
-        series(favicon, css, js, imagenes)
+        series(css, js, imagenes)
     );
 
 
@@ -298,4 +298,4 @@ export const procesarImagen = async (file, outputSubDir) => {
 
 
 
-export default parallel(favicon, crop, css, js, imagenes, dev);
+export default parallel(crop, css, js, imagenes, dev);
